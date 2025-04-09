@@ -2,19 +2,21 @@
 #include <stdlib.h>
 
 struct tournament {
-    char name;
     int *players;
+    char name[];
 };
 
 //TODO Arreglar función
 
 void printTournaments(FILE * torneos, int n, struct tournament *tournament) {
     for (int i = 0; i < n; i++) {
-        fprintf(torneos,"El nombre del torneo %d es: ", i);
-        fprintf(torneos, "%c\n", tournament[i].name);
+        fprintf(torneos,"El nombre del torneo %d es: ", i + 1);
+        fprintf(torneos, "%s\n", tournament[i].name);
         fprintf(torneos,"Los jugadores del torneo son: ");
-        for (int j = 0; j < sizeof(tournament[i].players) / sizeof(tournament[i].players[0]); j++) {
+        int j = 0;
+        while (tournament[i].players[j] != 0) {
             fprintf(torneos,"%d ", tournament[i].players[j]);
+            j++;
         }
         fprintf(torneos,"\n\n");
     }
@@ -47,15 +49,15 @@ int main() {
             scanf("%s", &tournaments[n].name);
             printf("Introduce el nombre de los participantes (0 para terminar):\n");
             do {
-                int auxName;
+                //int auxName;
                 tournaments[n].players = realloc(tournaments[n].players, sizeof(tournaments[n].players) + sizeof(int));
                 if (tournaments[n].players == NULL) {
-                    printf("Erreur\n");
+                    printf("Error\n");
                     return 1;
                 }
-                scanf("%d", &auxName);
-                tournaments[n].players[i] = auxName;
-                if (auxName != 0) {
+                scanf("%d", &tournaments[n].players[i]);
+               //tournaments[n].players[i] = auxName;
+                if (tournaments[n].players[i] != 0) {
                     i++;
                 }
             } while (tournaments[n].players[i] != 0);
@@ -66,6 +68,9 @@ int main() {
             scanf("%d", &selection);
             if (selection == 1) {
                 tournaments = realloc(tournaments, (n + 1) * sizeof(struct tournament));
+                if (tournaments == NULL) {
+                    printf("Error\n");
+                }
             }
         } while (selection == 1);
     } else return 0;
