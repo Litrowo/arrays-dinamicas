@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 struct tournament {
-    int *players;
     char name[100];
+    int *players;
 };
 
 void printTournaments(FILE * torneos, int n, struct tournament *tournament) {
@@ -55,7 +55,7 @@ int main() {
                 }
                 scanf("%d", &tournaments[n].players[i]);
                 //printf("%d", tournaments[n].players[i]);
-               //tournaments[n].players[i] = auxName;
+                //tournaments[n].players[i] = auxName;
                 if (tournaments[n].players[i] != 0) {
                     i++;
                 }
@@ -85,3 +85,8 @@ int main() {
 
     return 0;
 }
+
+//TODO leer info de torneos y no borrarlos cada vez que se use
+//TODO crear el struct players con nombre y puntuación
+//TODO crear funcion que permita modificar información de torneos
+//TODO ordenar los jugadores de cada torneo por puntuación
