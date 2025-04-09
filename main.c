@@ -6,7 +6,19 @@ struct tournament {
     int *players;
 };
 
-//TODO Escribir la información de los torneos en un fichero
+//TODO Arreglar función
+
+void printTournaments(FILE * torneos, int n, struct tournament *tournament) {
+    for (int i = 0; i < n; i++) {
+        fprintf(torneos,"El nombre del torneo %d es: ", i);
+        fprintf(torneos, "%c\n", tournament[i].name);
+        fprintf(torneos,"Los jugadores del torneo son: ");
+        for (int j = 0; j < sizeof(tournament[i].players) / sizeof(tournament[i].players[0]); j++) {
+            fprintf(torneos,"%d ", tournament[i].players[j]);
+        }
+        fprintf(torneos,"\n\n");
+    }
+}
 
 int main() {
 
@@ -58,9 +70,7 @@ int main() {
         } while (selection == 1);
     } else return 0;
 
-   // for (int i = 0; i < n; i++) {
-    //    printTournaments(torneos, i, tournaments);
-    //}
+    printTournaments(torneos, n, tournaments);
 
     for (int i = 0; i < n; i++) {
         free(tournaments[i].players);
