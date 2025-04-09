@@ -3,10 +3,8 @@
 
 struct tournament {
     int *players;
-    char name[];
+    char name[100];
 };
-
-//TODO Arreglar función
 
 void printTournaments(FILE * torneos, int n, struct tournament *tournament) {
     for (int i = 0; i < n; i++) {
@@ -50,12 +48,13 @@ int main() {
             printf("Introduce el nombre de los participantes (0 para terminar):\n");
             do {
                 //int auxName;
-                tournaments[n].players = realloc(tournaments[n].players, sizeof(tournaments[n].players) + sizeof(int));
+                tournaments[n].players = realloc(tournaments[n].players, (i * sizeof(int)) + sizeof(int));
                 if (tournaments[n].players == NULL) {
                     printf("Error\n");
                     return 1;
                 }
                 scanf("%d", &tournaments[n].players[i]);
+                //printf("%d", tournaments[n].players[i]);
                //tournaments[n].players[i] = auxName;
                 if (tournaments[n].players[i] != 0) {
                     i++;
