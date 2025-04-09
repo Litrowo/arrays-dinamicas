@@ -1,0 +1,27 @@
+# ninja log v6
+18	228	7658971587326833	CMakeFiles/malloctest.dir/main.c.obj	a305eb3629a96792
+230	517	7658971589455983	malloctest.exe	b49c1557ea5f395d
+14	218	7658974934976915	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+219	528	7658974937041574	malloctest.exe	b49c1557ea5f395d
+15	251	7658975508272083	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+252	532	7658975510656336	malloctest.exe	b49c1557ea5f395d
+14	286	7658976494662300	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+287	591	7658976497400150	malloctest.exe	b49c1557ea5f395d
+19	294	7658980303489248	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+304	624	7658980306357090	malloctest.exe	b49c1557ea5f395d
+14	243	7658982671419425	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+244	556	7658982673724281	malloctest.exe	b49c1557ea5f395d
+13	258	7658983154100222	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+260	561	7658983156597064	malloctest.exe	b49c1557ea5f395d
+16	245	7658983683245935	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+247	571	7658983685563362	malloctest.exe	b49c1557ea5f395d
+16	233	7658984087160820	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+235	536	7658984089359878	malloctest.exe	b49c1557ea5f395d
+16	243	7658985090493820	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+244	550	7658985092784925	malloctest.exe	b49c1557ea5f395d
+13	234	7658985534456520	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+236	526	7658985536680683	malloctest.exe	b49c1557ea5f395d
+15	237	7658986218813933	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+239	556	7658986221057484	malloctest.exe	b49c1557ea5f395d
+15	236	7658987760778857	CMakeFiles/malloctest.dir/main.c.obj	f6bca4c61ebc081a
+237	551	7658987763003205	malloctest.exe	b49c1557ea5f395d
