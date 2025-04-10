@@ -106,7 +106,7 @@ void readData(FILE * data, int *i, struct tournament *tournament) {
         }
     } while (keepReading);
     //printf("Test 4\n");
-    *i = n;
+    *i = n - 1;
 }
 
 int main() {
@@ -126,22 +126,30 @@ int main() {
     FILE * dataRead = fopen("data.txt", "r");
 
     readData(dataRead, &n, &tournaments[0]);
+    fclose(dataRead);
 
+    printf("%d\n", n);
 
     printf("Quieres crear un torneo? (1 si, 0 no):\n");
     scanf("%d", &selection);
 
     if (selection == 1) {
+        //tournaments = realloc(tournaments, (n + 1) * sizeof(struct tournament));
+        if (tournaments == NULL) {
+            printf("Error");
+        }
         do {
-            //tournaments[n].players = malloc(sizeof(struct players));
+            tournaments[n].players = malloc(sizeof(struct players));
             if (tournaments[n].players == NULL) {
                 printf("Error dando memoria a jugadores");
             }
             int i = 0;
             printf("\nIntroduce el nombre del torneo:\n");
             scanf("%s", &tournaments[n].name);
+            //printf("%s\n", tournaments[n].name);
             printf("Introduce el nombre de los participantes ('stop' para terminar):\n");
             do {
+                printf("Test 2\n");
                 tournaments[n].players = realloc(tournaments[n].players, (i + 1) * sizeof(struct players));
                 if (tournaments[n].players == NULL) {
                     printf("Errorasd\n");
@@ -169,18 +177,18 @@ int main() {
         } while (selection == 1);
     }
 
-    //printf("test1");
+    printf("test1");
 
 
     FILE * torneos = fopen("torneos.txt", "w");
 
-    printTournaments(torneos, n, tournaments);
+    //printTournaments(torneos, n, tournaments);
 
     fclose(torneos);
 
     FILE * data = fopen("data.txt", "w");
 
-    printData(data, n, tournaments);
+    //printData(data, n, tournaments);
 
     fclose(data);
 
