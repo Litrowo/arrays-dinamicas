@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 struct players {
-    char name[10];
+    char name[25];
     int score;
 };
 
@@ -51,62 +51,55 @@ void printTournaments(FILE * torneos, int n, struct tournament *tournament) {
     }
 }
 
+void strip_newline(char *str) {
+    str[strcspn(str, "\n")] = '\0'; // elimina el '\n' si existe
+}
 
 void printData(FILE * data, int n, struct tournament *tournament) {
     for (int i = 0; i < n; i++) {
-        fprintf(data,"%s\n\n", tournament[i].name);
+        fprintf(data,"%s\n", tournament[i].name);
         int j = 0;
         while (strcmp(tournament[i].players[j].name, "stop") != 0) {
-            fprintf(data, "%s\n\n", tournament[i].players[j].name);
-            fprintf(data, "%d\n\n", tournament[i].players[j].score);
+            fprintf(data, "%s\n", tournament[i].players[j].name);
+            fprintf(data, "%d\n", tournament[i].players[j].score);
             j++;
         }
-        fprintf(data,"\n\n");
+        if (strcmp(tournament[i].players[j].name, "stop") == 0) fprintf(data,"%s\n", tournament[i].players[j].name);
     }
+    fprintf(data,"fin");
 }
 
-void readData(FILE * data, int *i, struct tournament *tournament) {
-    bool keepReading = true;
-    int blanc = 0;
+void readData(FILE * data, int *i, struct tournament **tournamentPtr) {
+    bool keepReadingFile = true;
+    struct tournament *tournament = *tournamentPtr;
     int n = *i;
-    //printf("Test 0\n");
-    tournament[n].players = malloc(sizeof(struct players));
-    if (tournament[n].players == NULL) {
-        printf("Error");
-        exit(1);
-    }
-
     do {
-        //printf("Test 1\n");
-        blanc++;
-        char auxLineChange[2];
-        tournament = realloc(tournament, (n + 1) * sizeof(struct tournament));
+        tournament = realloc(tournament, sizeof(struct tournament) * (n + 1));
+        tournament[n].players = malloc(sizeof(struct players));
         fgets(tournament[n].name, 100, data);
-        //fscanf(data, "%s", &tournament[n].name);
-        //printf("%s\n", tournament[n].name);
-        //fgets(auxLineChange, 2, data);
-        //printf("Test 2\n");
+        strip_newline(tournament[n].name);
+        if (strcmp(tournament[n].name, "fin") == 0) {
+            keepReadingFile = false;
+            break;
+        }
         int j = 0;
-        while (strcmp(fgets(auxLineChange, 2, data), "\n") != 0) {
-            tournament[n].players = realloc(tournament[n].players, (j + 1) * sizeof(struct players));
-            fscanf(data, "%s", &tournament[n].players[j].name);
-            //printf("%s\n", tournament[n].players[j].name);
-            //tournament[n].players[j].name = auxPlayerName;
-            fscanf(data, "%d", &tournament[n].players[j].score);
-
-            //printf("Test 3\n");
-            blanc = 0;
+        while (true) {
+            tournament[n].players = realloc(tournament[n].players, sizeof(struct players) * (j + 1));
+            fgets(tournament[n].players[j].name, 25, data);
+            strip_newline(tournament[n].players[j].name);
+            if (strstr(tournament[n].players[j].name, "stop") != NULL) {
+                break;
+            }
+            char auxString[25];
+            fgets(auxString, 25, data);
+            strip_newline(auxString);
+            tournament[n].players[j].score = atoi(auxString);
             j++;
         }
         n++;
-        //printf("Test 3'\n");
-        if (blanc > 2) {
-            //printf("Test 5\n");
-            keepReading = false;
-        }
-    } while (keepReading);
-    //printf("Test 4\n");
-    *i = n - 1;
+    } while (keepReadingFile);
+    *i = n;
+    *tournamentPtr = tournament;
 }
 
 int main() {
@@ -120,15 +113,13 @@ int main() {
         exit(1);
     }
 
-
     srand(time(NULL));
 
     FILE * dataRead = fopen("data.txt", "r");
-
-    readData(dataRead, &n, &tournaments[0]);
+    //printf("Test 1\n");
+    readData(dataRead, &n, &tournaments);
     fclose(dataRead);
-
-    printf("%d\n", n);
+    //printf("Test 2\n");
 
     printf("Quieres crear un torneo? (1 si, 0 no):\n");
     scanf("%d", &selection);
@@ -177,31 +168,28 @@ int main() {
         } while (selection == 1);
     }
 
-    printf("test1");
-
-
     FILE * torneos = fopen("torneos.txt", "w");
 
-    //printTournaments(torneos, n, tournaments);
+    printTournaments(torneos, n, tournaments);
 
     fclose(torneos);
 
     FILE * data = fopen("data.txt", "w");
 
-    //printData(data, n, tournaments);
+    printData(data, n, tournaments);
 
     fclose(data);
-
 
     for (int i = 0; i < n; i++) {
         free(tournaments[i].players);
     }
+
     free(tournaments);
 
     return 0;
 }
 
-//TODO leer info de torneos y no borrarlos cada vez que se use
+//leer info de torneos y no borrarlos cada vez que se use
 //crear el struct players con nombre y puntuación
 //TODO crear funcion que permita modificar información de torneos
 //ordenar los jugadores de cada torneo por puntuación
